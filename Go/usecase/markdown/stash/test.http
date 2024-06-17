@@ -1,0 +1,15 @@
+####
+POST /upload HTTP/1.1
+Host: 127.0.0.1:36677
+Content-Type:application/json
+
+{
+    "list": [
+        "AppData\\Local\\Temp\\Typora\\typora-icon2.png",
+        "AppData\\Local\\Temp\\Typora\\typora-icon2.png",
+        "AppData\\Local\\Temp\\Typora\\typora-icon2.png",
+        "AppData\\Local\\Temp\\Typora\\typora-icon2.png",
+        "AppData\\Local\\Temp\\Typora\\typora-icon2.png",
+        "AppData\\Local\\Temp\\Typora\\typora-icon2.png"
+    ]
+}
