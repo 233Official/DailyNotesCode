@@ -52,8 +52,8 @@ func uploadFiles(filePaths []string, targetURL string) error {
 
 func main() {
 	filePaths := []string{
-        "AppData\\Local\\Temp\\Typora\\typora-icon2.png",
-        "AppData\\Local\\Temp\\Typora\\typora-icon2.png"
+		"AppData\\Local\\Temp\\Typora\\typora-icon2.png",
+		"AppData\\Local\\Temp\\Typora\\typora-icon2.png",
 	}
 	targetURL := "http://127.0.0.1:36677/upload"
 
