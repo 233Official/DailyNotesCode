@@ -2,6 +2,10 @@
 
 >  [pen4uin/java-memshell-generator: 一款支持自定义的 Java 内存马生成工具｜A customizable Java in-memory webshell generation tool. (github.com)](https://github.com/pen4uin/java-memshell-generator)
 
+[jMG-gui-obf-1.0.8.jar](https://github.com/pen4uin/java-memshell-generator/releases/download/v1.0.8/jMG-gui-obf-1.0.8.jar)
+
+---
+
 <h4 align="right"><strong><a href="jmg-docs/README_EN.md">English</a></strong> | 中文 </h4>
 <p align="center">
   <h1 align="center">Java Memshell Generator</h1>
