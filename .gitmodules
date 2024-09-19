@@ -1,0 +1,3 @@
+[submodule "Security/Web/webshell/manager/AntSword/App/antSword"]
+	path = Security/Web/webshell/manager/AntSword/App/antSword
+	url = https://github.com/AntSwordProject/antSword.git
