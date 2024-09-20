@@ -25,5 +25,5 @@ def generate_random_password(length=12, use_lowercase=True, use_uppercase=True, 
 
 # 使用示例
 password_length = 16  # 设定密码长度
-password = generate_random_password(length=password_length, use_lowercase=True, use_uppercase=True, use_digits=True, use_special=False)
+password = generate_random_password(length=password_length, use_lowercase=True, use_uppercase=True, use_digits=True, use_special=True)
 print(f"生成的随机密码: {password}")
