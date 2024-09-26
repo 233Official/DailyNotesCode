@@ -15,14 +15,20 @@ public class DynamicUtils {
 
     public static String VALVE_CLASS_STRING = "yv66vgAAADQAMQoACAAbCgAcAB0IAB4KAB8AIAoABwAhCwAiACMHACQHACUBAAY8aW5pdD4BAAMoKVYBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEAKUxvcmcvc3UxOC9tZW1zaGVsbC90ZXN0L3RvbWNhdC9UZXN0VmFsdmU7AQAGaW52b2tlAQBSKExvcmcvYXBhY2hlL2NhdGFsaW5hL2Nvbm5lY3Rvci9SZXF1ZXN0O0xvcmcvYXBhY2hlL2NhdGFsaW5hL2Nvbm5lY3Rvci9SZXNwb25zZTspVgEAB3JlcXVlc3QBACdMb3JnL2FwYWNoZS9jYXRhbGluYS9jb25uZWN0b3IvUmVxdWVzdDsBAAhyZXNwb25zZQEAKExvcmcvYXBhY2hlL2NhdGFsaW5hL2Nvbm5lY3Rvci9SZXNwb25zZTsBAApFeGNlcHRpb25zBwAmBwAnAQAKU291cmNlRmlsZQEADlRlc3RWYWx2ZS5qYXZhDAAJAAoHACgMACkAKgEAEkkgY29tZSBoZXJlIGZpcnN0IQcAKwwALAAtDAAuAC8HADAMABAAEQEAJ29yZy9zdTE4L21lbXNoZWxsL3Rlc3QvdG9tY2F0L1Rlc3RWYWx2ZQEAJG9yZy9hcGFjaGUvY2F0YWxpbmEvdmFsdmVzL1ZhbHZlQmFzZQEAE2phdmEvaW8vSU9FeGNlcHRpb24BAB5qYXZheC9zZXJ2bGV0L1NlcnZsZXRFeGNlcHRpb24BACZvcmcvYXBhY2hlL2NhdGFsaW5hL2Nvbm5lY3Rvci9SZXNwb25zZQEACWdldFdyaXRlcgEAFygpTGphdmEvaW8vUHJpbnRXcml0ZXI7AQATamF2YS9pby9QcmludFdyaXRlcgEAB3ByaW50bG4BABUoTGphdmEvbGFuZy9TdHJpbmc7KVYBAAdnZXROZXh0AQAdKClMb3JnL2FwYWNoZS9jYXRhbGluYS9WYWx2ZTsBABlvcmcvYXBhY2hlL2NhdGFsaW5hL1ZhbHZlACEABwAIAAAAAAACAAEACQAKAAEACwAAAC8AAQABAAAABSq3AAGxAAAAAgAMAAAABgABAAAADQANAAAADAABAAAABQAOAA8AAAABABAAEQACAAsAAABbAAMAAwAAABUstgACEgO2AAQqtgAFKyy5AAYDALEAAAACAAwAAAAOAAMAAAARAAkAEwAUABQADQAAACAAAwAAABUADgAPAAAAAAAVABIAEwABAAAAFQAUABUAAgAWAAAABgACABcAGAABABkAAAACABo=";
 
+    public static String BASIC_FILTER_CLASS_STRING_BASE64 = "yv66vgAAAEEANwoAAgADBwAEDAAFAAYBABBqYXZhL2xhbmcvT2JqZWN0AQAGPGluaXQ+AQADKClWCwAIAAkHAAoMAAsADAEAHWphdmF4L3NlcnZsZXQvU2VydmxldFJlc3BvbnNlAQAJZ2V0V3JpdGVyAQAXKClMamF2YS9pby9QcmludFdyaXRlcjsIAA4BABB0aGlzIGlzIGEgZmlsdGVyCgAQABEHABIMABMAFAEAE2phdmEvaW8vUHJpbnRXcml0ZXIBAAdwcmludGxuAQAVKExqYXZhL2xhbmcvU3RyaW5nOylWCwAWABcHABgMABkAGgEAGWphdmF4L3NlcnZsZXQvRmlsdGVyQ2hhaW4BAAhkb0ZpbHRlcgEAQChMamF2YXgvc2VydmxldC9TZXJ2bGV0UmVxdWVzdDtMamF2YXgvc2VydmxldC9TZXJ2bGV0UmVzcG9uc2U7KVYHABwBABljb20vc3VtbWVyMjMzL0Jhc2ljRmlsdGVyBwAeAQAUamF2YXgvc2VydmxldC9GaWx0ZXIBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEAG0xjb20vc3VtbWVyMjMzL0Jhc2ljRmlsdGVyOwEABGluaXQBAB8oTGphdmF4L3NlcnZsZXQvRmlsdGVyQ29uZmlnOylWAQAMZmlsdGVyQ29uZmlnAQAcTGphdmF4L3NlcnZsZXQvRmlsdGVyQ29uZmlnOwEAWyhMamF2YXgvc2VydmxldC9TZXJ2bGV0UmVxdWVzdDtMamF2YXgvc2VydmxldC9TZXJ2bGV0UmVzcG9uc2U7TGphdmF4L3NlcnZsZXQvRmlsdGVyQ2hhaW47KVYBAA5zZXJ2bGV0UmVxdWVzdAEAHkxqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXF1ZXN0OwEAD3NlcnZsZXRSZXNwb25zZQEAH0xqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXNwb25zZTsBAAtmaWx0ZXJDaGFpbgEAG0xqYXZheC9zZXJ2bGV0L0ZpbHRlckNoYWluOwEACkV4Y2VwdGlvbnMHADEBABNqYXZhL2lvL0lPRXhjZXB0aW9uBwAzAQAeamF2YXgvc2VydmxldC9TZXJ2bGV0RXhjZXB0aW9uAQAHZGVzdHJveQEAClNvdXJjZUZpbGUBABBCYXNpY0ZpbHRlci5qYXZhACEAGwACAAEAHQAAAAQAAQAFAAYAAQAfAAAAMwABAAEAAAAFKrcAAbEAAAACACAAAAAKAAIAAAAMAAQADQAhAAAADAABAAAABQAiACMAAAABACQAJQABAB8AAAA1AAAAAgAAAAGxAAAAAgAgAAAABgABAAAAEQAhAAAAFgACAAAAAQAiACMAAAAAAAEAJgAnAAEAAQAZACgAAgAfAAAAZAADAAQAAAAULLkABwEAEg22AA8tKyy5ABUDALEAAAACACAAAAAOAAMAAAAWAAsAFwATABgAIQAAACoABAAAABQAIgAjAAAAAAAUACkAKgABAAAAFAArACwAAgAAABQALQAuAAMALwAAAAYAAgAwADIAAQA0AAYAAQAfAAAAKwAAAAEAAAABsQAAAAIAIAAAAAYAAQAAABwAIQAAAAwAAQAAAAEAIgAjAAAAAQA1AAAAAgA2";
+
     public static Class<?> getClass(String classCode) throws IOException, InvocationTargetException,
             IllegalAccessException, NoSuchMethodException, InstantiationException {
+        // 获取当前线程的上下文类加载器 ClassLoader
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        // 使用 Base64 解码一个Java类class文件的二进制数据的Base64编码的字符串成字节数组
         Base64.Decoder base64Decoder = Base64.getDecoder();
         byte[] decodeBytes = base64Decoder.decode(classCode);
 
+        // 通过反射调用ClassLoader的defineClass方法，将字节数组转换为Class对象
         Method method = null;
         Class<?> clz = loader.getClass();
+        // 在一个 while 循环中不断尝试获取该方法，如果当前类 clz 中没有找到 defineClass 方法，则继续向其父类查找，直到找到该方法或到达 Object 类为止
         while (method == null && clz != Object.class) {
             try {
                 method = clz.getDeclaredMethod("defineClass", byte[].class, int.class, int.class);
@@ -30,13 +36,13 @@ public class DynamicUtils {
                 clz = clz.getSuperclass();
             }
         }
-
         if (method != null) {
+            // 一旦找到了 defineClass 方法，代码将其设置为可访问的（即使该方法是私有的）
             method.setAccessible(true);
+            // 通过反射调用该方法，将解码后的字节数组 decodeBytes 转换为一个 Class 对象并返回
             return (Class<?>) method.invoke(loader, decodeBytes, 0, decodeBytes.length);
         }
-
+        // 如果在整个过程中未能找到 defineClass 方法，则返回 null。
         return null;
-
     }
 }

