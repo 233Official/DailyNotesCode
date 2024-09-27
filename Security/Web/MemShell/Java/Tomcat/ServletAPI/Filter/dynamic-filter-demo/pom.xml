@@ -11,7 +11,9 @@
     <!-- 1.1-Filter动态添加 -->
     <!-- <version>1.1</version> -->
     <!-- 1.1.2-Filter动态添加-更多的调试信息 -->
-    <version>1.1.2</version>
+    <!-- <version>1.1.2-动态添加恶意Filter</version> -->
+    <!-- 1.2-注入恶意Filter -->
+    <version>1.2</version>
     <packaging>war</packaging>
 
     <name>dynamic-filter-demo Maven Webapp</name>

