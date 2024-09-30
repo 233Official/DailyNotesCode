@@ -15,7 +15,9 @@
     <!-- version 1.0.2 - 注释掉原本的一部分后仍然能够运行 - -->
     <!-- <version>1.0.2</version> -->
     <!-- version 1.0.3 - 删除掉原本的恶意Servlet保留我认为合适的Servlet后 - 也是可以正常使用的 - -->
-    <version>1.0.3</version>
+    <!-- <version>1.0.3</version> -->
+    <!-- version 1.0.4 - 再次换用原始 Servlet - 依然可以用 - 经验:每次修改代码重新编译一定要改版本号, 不然可能会有意想不到的问题定位不到 - -->
+    <version>1.0.4</version>
     <packaging>war</packaging>
 
     <name>tomcat-dynamic-add-servlet Maven Webapp</name>
