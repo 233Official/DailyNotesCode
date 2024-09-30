@@ -7,7 +7,7 @@ public class ClassToBase64 {
     public static void main(String[] args) {
         try {
             // 读取.class文件
-            File file = new File("resource/CMDFilter.class");
+            File file = new File("resource/SummerCMDServlet.class");
             FileInputStream fis = new FileInputStream(file);
             byte[] bytes = new byte[(int) file.length()];
             fis.read(bytes);
