@@ -12,8 +12,10 @@
     <!-- <version>1.0</version> -->
     <!-- version 1.0.1 - 动态添加恶意 Servlet - 通过传入 query 参数 cmd 执行命令 - 研究下为什么之前无法成功添加 Servlet -这一版两个 SevletCMD 写法都能正常使用-->
     <!-- <version>1.0.1</version> -->
-    <!-- version 1.0.2 - -->
-    <version>1.0.2</version>
+    <!-- version 1.0.2 - 注释掉原本的一部分后仍然能够运行 - -->
+    <!-- <version>1.0.2</version> -->
+    <!-- version 1.0.3 - 删除掉原本的恶意Servlet保留我认为合适的Servlet后 - 也是可以正常使用的 - -->
+    <version>1.0.3</version>
     <packaging>war</packaging>
 
     <name>tomcat-dynamic-add-servlet Maven Webapp</name>

