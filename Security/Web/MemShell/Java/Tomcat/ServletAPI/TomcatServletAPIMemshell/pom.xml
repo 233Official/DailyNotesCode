@@ -9,7 +9,11 @@
     <!-- version-listener-0.1 初版 Listener 内存马尝试 - 成功-->
     <!-- <version>listener-0.1</version> -->
     <!-- version-listener-0.2 初次尝试注入恶意Listener - 成功-->
-    <version>listener-0.2</version>
+    <!-- <version>listener-0.2</version> -->
+    <!-- version-listener-0.3 尝试修改系统判断逻辑 -->
+    <!-- <version>listener-0.3</version> -->
+    <!-- version-listener-1.0 确定0.3版本的代码为可用代码,更新版本号为1.0 -->
+    <version>listener-1.0</version>
     <packaging>war</packaging>
 
     <name>tomcat-servletapi-memshell Maven Webapp</name>

