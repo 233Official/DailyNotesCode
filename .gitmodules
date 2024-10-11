@@ -1,3 +1,6 @@
 [submodule "Security/Web/webshell/manager/AntSword/App/antSword"]
 	path = Security/Web/webshell/manager/AntSword/App/antSword
 	url = https://github.com/AntSwordProject/antSword.git
+[submodule "Security/Web/MemShell/generator/java-memshell-generator/src"]
+	path = Security/Web/MemShell/generator/java-memshell-generator/src
+	url = https://github.com/pen4uin/java-memshell-generator.git
