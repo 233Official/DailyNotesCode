@@ -4,3 +4,6 @@
 [submodule "Security/Web/MemShell/generator/java-memshell-generator/src"]
 	path = Security/Web/MemShell/generator/java-memshell-generator/src
 	url = https://github.com/pen4uin/java-memshell-generator.git
+[submodule "Security/Web/Unmarshall/marshalsec/src"]
+	path = Security/Web/Unmarshall/marshalsec/src
+	url = https://github.com/mbechler/marshalsec.git
