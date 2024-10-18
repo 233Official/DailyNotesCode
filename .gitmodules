@@ -1,6 +1,0 @@
-[submodule "Security/Web/webshell/manager/AntSword/App/antSword"]
-	path = Security/Web/webshell/manager/AntSword/App/antSword
-	url = https://github.com/AntSwordProject/antSword.git
-[submodule "Security/Web/Unmarshall/marshalsec/src"]
-	path = Security/Web/Unmarshall/marshalsec/src
-	url = https://github.com/mbechler/marshalsec.git
