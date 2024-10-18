@@ -15,4 +15,10 @@
 
     <!-- 扫描 Controller 包 -->
     <context:component-scan base-package="com.summery233.controller"/>
+
+        <!-- 配置视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 </beans>
