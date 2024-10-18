@@ -23,8 +23,8 @@ file_handler.setFormatter(
     logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 )
 
-# logging.basicConfig(level=logging.DEBUG, handlers=[file_handler, handler])
-logging.basicConfig(level=logging.INFO, handlers=[file_handler, handler])
+logging.basicConfig(level=logging.DEBUG, handlers=[file_handler, handler])
+# logging.basicConfig(level=logging.INFO, handlers=[file_handler, handler])
 
 
 logger = logging.getLogger(__name__)

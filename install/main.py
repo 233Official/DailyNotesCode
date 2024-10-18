@@ -3,6 +3,7 @@ import platform
 from summerlog import logger
 import httpx
 from download_extract_zip import download_extract_zips
+from sync_git_repo import sync_git_repos
 
 
 CURRENT_DIR = Path(__file__).resolve().parent
@@ -33,6 +34,8 @@ def main():
         logger.info("代理可用, 进入安装流程")
     os_name_lower = platform.system().lower()
     download_extract_zips(os_name_lower=os_name_lower, proxies=PROXIES)
+    sync_git_repos(http_proxy=HTTP_PROXY)
+
 
 if __name__ == "__main__":
     main()
