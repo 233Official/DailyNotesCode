@@ -18,7 +18,9 @@
   <!-- <version>controller-1.3.1-summer-controller-cmd-test</version> -->
 
   <!-- Interceptor version 0.1 su18 初版 -->
-  <version>interceptor-0.1-su18-origin</version>
+  <!-- <version>interceptor-0.1-su18-origin</version> -->
+  <!-- Interceptor version 0.2 注册恶意 Interceptor -->
+  <version>interceptor-0.2-summer-interceptor-cmd</version>
   <packaging>war</packaging>
 
   <name>spring-webmvc-memshell Maven Webapp</name>

@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import static com.summery233.controller.DynamicUtils.INTERCEPTOR_CLASS_STRING;
+// import static com.summery233.controller.DynamicUtils.INTERCEPTOR_CLASS_STRING;
+import static com.summery233.controller.DynamicUtils.SUMMER_INTERCEPTOR_CMD_CLASS_BASE64_STRING;
 
 /**
  * 访问此接口动态添加 Interceptor
@@ -39,7 +40,10 @@ public class AddInterceptor {
 		Field f = mapping.getClass().getSuperclass().getSuperclass().getSuperclass().getDeclaredField("adaptedInterceptors");
 		f.setAccessible(true);
 		List<HandlerInterceptor> list = (List<HandlerInterceptor>) f.get(mapping);
-		list.add((HandlerInterceptor) DynamicUtils.getClass(INTERCEPTOR_CLASS_STRING).newInstance());
+
+		// list.add((HandlerInterceptor) DynamicUtils.getClass(INTERCEPTOR_CLASS_STRING).newInstance());
+		list.add((HandlerInterceptor) DynamicUtils.getClass(SUMMER_INTERCEPTOR_CMD_CLASS_BASE64_STRING).newInstance());
+
 		response.getWriter().println("interceptor added");
 	}
 }
