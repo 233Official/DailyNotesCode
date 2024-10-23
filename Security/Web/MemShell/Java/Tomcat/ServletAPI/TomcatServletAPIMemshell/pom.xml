@@ -13,7 +13,13 @@
     <!-- version-listener-0.3 尝试修改系统判断逻辑 -->
     <!-- <version>listener-0.3</version> -->
     <!-- version-listener-1.0 确定0.3版本的代码为可用代码,更新版本号为1.0 -->
-    <version>listener-1.0</version>
+    <!-- <version>listener-1.0</version> -->
+    
+    <!-- Tomcat Valve 内存马 - 0.1 - su18 -->
+    <!-- <version>valve-0.1-su18-origin</version> -->
+    <!-- Tomcat Valve 内存马 - 0.2 - 注入恶意Valve -->
+    <version>valve-0.2-summer-cmd-valve</version>
+
     <packaging>war</packaging>
 
     <name>tomcat-servletapi-memshell Maven Webapp</name>
