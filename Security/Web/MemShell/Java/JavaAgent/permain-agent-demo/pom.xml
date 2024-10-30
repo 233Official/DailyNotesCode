@@ -6,7 +6,9 @@
     <groupId>com.summery233</groupId>
     <artifactId>permain-agent-demo</artifactId>
     <!-- <version>agent-0.1</version> -->
-    <version>main-0.1</version>
+    <!-- <version>main-0.1</version> -->
+    <version>0.1</version>
+
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -23,7 +25,7 @@
                     <archive>
                         <manifestEntries>
                             <Premain-Class>com.summery233.JavaAgentPremain</Premain-Class>
-                            <!-- <Main-Class>com.summery233.Hello</Main-Class> -->
+                            <Main-Class>com.summery233.Hello</Main-Class>
                         </manifestEntries>
                     </archive>
                 </configuration>
