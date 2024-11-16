@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传和下载</title>
+</head>
+
+<body>
+    <h1>下载文件</h1>
+    <ul>
+        {% for file in files %}
+        <li><a href="/download/{{ file }}">{{ file }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h1>上传文件</h1>
+    <input type="file" id="file-input" onchange="displayFileInfo()" />
+    <button onclick="startUpload()">上传</button>
+
+    <div id="file-info"></div>
+
+    <div id="progress-container" style="width: 100%; background-color: #ccc; display: none;">
+        <div id="progress-bar" style="width: 0%; height: 20px; background-color: #4caf50;"></div>
+    </div>
+
+    <script>
+        async function displayFileInfo() {
+            const fileInput = document.getElementById('file-input');
+            const fileInfoDiv = document.getElementById('file-info');
+            const file = fileInput.files[0];
+            if (file) {
+                fileInfoDiv.innerHTML = `
+            <p>文件名：${file.name}</p>
+            <p>文件大小：${(file.size / (1024 * 1024)).toFixed(2)} MB</p>
+            <p>文件类型：${file.type || '未知'}</p>
+        `;
+            }
+        }
+
+        async function startUpload() {
+            const fileInput = document.getElementById('file-input');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('请先选择一个文件！');
+                return;
+            }
+
+            // 获取服务器支持的最大分块大小
+            const response = await fetch('/get_max_chunk_size/');
+            const { max_chunk_size } = await response.json();
+
+            // 根据文件大小和服务器限制设置分块大小
+            let chunkSize = max_chunk_size;
+            if (file.size <= 10 * 1024 * 1024) { // 如果文件小于等于10MB，使用1MB的分块
+                chunkSize = 1 * 1024 * 1024;
+            }
+
+            // 更新文件信息，显示分块大小
+            const fileInfoDiv = document.getElementById('file-info');
+            fileInfoDiv.innerHTML += `<p>分块大小：${(chunkSize / (1024 * 1024)).toFixed(2)} MB</p>`;
+
+            // 显示进度条
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            progressContainer.style.display = 'block';
+
+            // 开始上传，获取 upload_id 和已接收的分块列表
+            const startResponse = await fetch('/start_upload/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    filename: file.name,
+                    filesize: file.size,
+                    chunk_size: chunkSize
+                })
+            });
+            const { upload_id, received_chunks } = await startResponse.json();
+
+            // 计算总分块数
+            const totalChunks = Math.ceil(file.size / chunkSize);
+
+            // 上传分块，跳过已上传且有效的分块
+            for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+                if (received_chunks.includes(chunkIndex)) {
+                    console.log(`分块 ${chunkIndex} 已存在且完整，跳过`);
+                    continue;
+                }
+                const start = chunkIndex * chunkSize;
+                const end = Math.min(file.size, start + chunkSize);
+                const chunk = file.slice(start, end);
+
+                // 读取文件块数据并计算 SHA-256
+                const chunkArrayBuffer = await chunk.arrayBuffer();
+                const hashBuffer = await crypto.subtle.digest('SHA-256', chunkArrayBuffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const chunkHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+                const formData = new FormData();
+                formData.append('upload_id', upload_id);
+                formData.append('chunk_index', chunkIndex);
+                formData.append('chunk_hash', chunkHash);
+                formData.append('chunk', new Blob([chunkArrayBuffer]));
+
+                await fetch('/upload_chunk/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // 更新进度条
+                const progress = ((chunkIndex + 1) / totalChunks) * 100;
+                progressBar.style.width = progress + '%';
+            }
+
+            // 上传完成后，隐藏进度条并提示完成
+            progressContainer.style.display = 'none';
+            alert('文件上传完成！');
+            // 可以选择刷新页面或更新文件列表
+            window.location.reload();
+        }
+    </script>
+</body>
+
+</html>
