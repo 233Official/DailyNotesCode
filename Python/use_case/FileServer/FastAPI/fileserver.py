@@ -24,7 +24,11 @@ templates = Jinja2Templates(directory=TEMPLATES_DIRECTORY)
 
 @app.get("/", response_class=HTMLResponse)
 async def main(request: Request):
-    files = [str(file.relative_to(UPLOAD_DIRECTORY)) for file in UPLOAD_DIRECTORY.rglob('*') if file.is_file()]
+    files = [
+        str(file.relative_to(UPLOAD_DIRECTORY))
+        for file in UPLOAD_DIRECTORY.rglob("*")
+        if file.is_file()
+    ]
     return templates.TemplateResponse(
         "index.html", {"request": request, "files": files}
     )
@@ -52,4 +56,4 @@ if __name__ == "__main__":
         app, host="0.0.0.0", port=8000, log_config=str(UVICORN_LOG_CONFIG_JSON_PATH)
     )
 
-# 
+#
