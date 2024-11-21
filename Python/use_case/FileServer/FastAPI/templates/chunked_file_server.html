@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
+<script src="/static/crypto-js.min.js"></script>
+
 <head>
     <meta charset="UTF-8">
     <title>文件上传和下载</title>
@@ -94,9 +96,14 @@
 
                 // 读取文件块数据并计算 SHA-256
                 const chunkArrayBuffer = await chunk.arrayBuffer();
-                const hashBuffer = await crypto.subtle.digest('SHA-256', chunkArrayBuffer);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                const chunkHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+                // const hashBuffer = await crypto.subtle.digest('SHA-256', chunkArrayBuffer);
+                // const hashArray = Array.from(new Uint8Array(hashBuffer));
+                // const chunkHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+                // 使用 crypto-js 计算 SHA-256
+                const wordArray = CryptoJS.lib.WordArray.create(new Uint8Array(chunkArrayBuffer));
+                const chunkHash = CryptoJS.SHA256(wordArray).toString();
 
                 const formData = new FormData();
                 formData.append('upload_id', upload_id);
