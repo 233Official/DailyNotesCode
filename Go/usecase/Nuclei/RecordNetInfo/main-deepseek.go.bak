@@ -1,0 +1,66 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"net"
+	"net/http"
+	"time"
+
+	nuclei "github.com/projectdiscovery/nuclei/v3/lib"
+	"github.com/projectdiscovery/nuclei/v3/pkg/output"
+)
+
+func customDialContext(ctx context.Context, network, addr string) (net.Conn, error) {
+	conn, err := net.Dial(network, addr)
+	if err != nil {
+		return nil, err
+	}
+	// 获取并记录源和目标的 IP 端口
+	localAddr := conn.LocalAddr().String()
+	remoteAddr := conn.RemoteAddr().String()
+	log.Printf("Source: %s, Destination: %s\n", localAddr, remoteAddr)
+	return conn, nil
+}
+
+func main() {
+	// 创建自定义的 Transport 和 Client
+	transport := &http.Transport{
+		DialContext: customDialContext,
+	}
+	client := &http.Client{
+		Transport: transport,
+	}
+
+	// 创建 Nuclei 引擎并设置自定义的 HTTP 客户端
+	// create nuclei engine with options
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	// 创建 Nuclei 引擎，指定模板目录和模板文件
+	var templates []string = []string{"./pikachu_rce_eval.yaml"}
+	engine, err := nuclei.NewNucleiEngineCtx(
+		ctx,
+		nuclei.WithTemplatesOrWorkflows(nuclei.TemplateSources{Templates: templates}),
+	)
+	if err != nil {
+		panic(err)
+	}
+	engine.SetHTTPClient(client)
+	nuclei.NucleiSDKOptions.HTTPClient = client
+
+	// load targets and optionally probe non http/https targets
+	engine.LoadTargets([]string{"http://192.168.1.215:9221"}, false)
+
+	err = engine.ExecuteWithCallback(func(event *output.ResultEvent) {
+		vul_name := event.Info.Name
+		vul_description := event.Info.Description
+		detected_url := event.URL + event.Path
+		fmt.Printf("在 %s 发现 %s 漏洞，漏洞描述：%s\n", detected_url, vul_name, vul_description)
+	})
+	if err != nil {
+		panic(err)
+	}
+	defer engine.Close()
+}

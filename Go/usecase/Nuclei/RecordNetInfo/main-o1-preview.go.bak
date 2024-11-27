@@ -1,0 +1,61 @@
+package main
+
+import (
+	"fmt"
+
+	"github.com/projectdiscovery/nuclei/v3/pkg/catalog"
+	"github.com/projectdiscovery/nuclei/v3/pkg/executer"
+	"github.com/projectdiscovery/nuclei/v3/pkg/progress"
+	"github.com/projectdiscovery/nuclei/v3/pkg/protocols/common/engine"
+	"github.com/projectdiscovery/nuclei/v3/pkg/types"
+	"github.com/projectdiscovery/nuclei/v3/pkg/workflows/loader"
+)
+
+func main() {
+	// 创建模板编录器
+	templateCatalog := catalog.New("/path/to/nuclei-templates")
+
+	// 配置 Nuclei 选项
+	opts := &types.Options{
+		Templates: []string{"your-template.yaml"},
+	}
+
+	// 创建自定义输出写入器
+	customWriter := &CustomOutputWriter{}
+
+	// 创建自定义 HTTP 客户端
+	httpClient := customHTTPClient()
+
+	// 创建执行器引擎
+	executerOpts := executer.Options{
+		Output:       customWriter,
+		Catalog:      templateCatalog,
+		Progress:     progress.NewStatsTracker(0, false, false),
+		IssuesClient: issuesClient,
+		Options:      opts,
+		RateLimiter:  rateLimiter,
+		Dialer:       netDialer,
+		DialerOpts:   dialerOpts,
+		WorkerSettings: engine.WorkerSettings{
+			HTTPClient:          httpClient,
+			HTTPRequestCallback: customHTTPRequestCallback,
+		},
+	}
+
+	// 加载模板
+	workflowLoader := loader.NewLoader(&loader.Config{
+		Options:      opts,
+		Catalog:      templateCatalog,
+		ExecuterOpts: executerOpts,
+	})
+	workflows, err := workflowLoader.Load()
+	if err != nil {
+		fmt.Printf("无法加载模板：%v\n", err)
+		return
+	}
+
+	// 运行扫描
+	for _, workflow := range workflows {
+		workflow.ExecuteWithOpts(executerOpts)
+	}
+}
