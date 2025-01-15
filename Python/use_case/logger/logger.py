@@ -110,7 +110,8 @@ class ColoredInfoLogger(logging.Logger):
 # 设置自定义的Logger
 logging.setLoggerClass(ColoredInfoLogger)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+level = logging.DEBUG
+logger.setLevel(level)
 
 # 设置日志文件路径
 LOG_BASIC_NAME = "basic.log"
@@ -127,12 +128,12 @@ if not os.path.exists(LOG_BASIC_PATH.parent / "README.md"):
 
 # 创建自定义的文件处理器并设置级别为DEBUG
 fh = TimedRotatingFileHandler(LOG_BASIC_PATH, maxBytes=1000000, backupCount=5)
-fh.setLevel(logging.DEBUG)
+fh.setLevel(level)
 fh.setFormatter(CustomFormatter())
 logger.addHandler(fh)
 
 # 创建控制台处理器并设置级别为DEBUG
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(level)
 ch.setFormatter(CustomFormatter())
 logger.addHandler(ch)
