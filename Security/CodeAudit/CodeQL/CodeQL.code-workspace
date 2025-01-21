@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "example-c"
+		},
+		{
+			"path": "vscode-codeql-starter"
+		}
+	],
+	"settings": {
+		"codeQL.createQuery.qlPackLocation": "/Users/summery233/Documents/Repo/Self/DailyNotesCode/Security/CodeAudit/CodeQL/example-c"
+	}
+}
