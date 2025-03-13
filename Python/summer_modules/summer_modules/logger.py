@@ -107,33 +107,47 @@ class ColoredInfoLogger(logging.Logger):
         super().info(msg, extra={"info_color": info_color}, *args, **kwargs)
 
 
-# 设置自定义的Logger
-logging.setLoggerClass(ColoredInfoLogger)
-logger = logging.getLogger(__name__)
-level = logging.DEBUG
-logger.setLevel(level)
+def init_and_get_logger(current_dir: Path, logger_name="summer_logger") -> logging.Logger:
+    # 设置自定义的Logger
+    logging.setLoggerClass(ColoredInfoLogger)
+    logger = logging.getLogger(logger_name)
 
-# 设置日志文件路径
-LOG_BASIC_NAME = "basic.log"
-LOG_BASIC_PATH = Path(__file__).parent / "../logs" / LOG_BASIC_NAME
-# 如果不存在logs文件夹则创建
-if not os.path.exists(LOG_BASIC_PATH.parent):
-    os.mkdir(LOG_BASIC_PATH.parent)
-# 如果没有 README.md 文件, 则新建该文件用于说明日志文件的格式
-if not os.path.exists(LOG_BASIC_PATH.parent / "README.md"):
-    with open(LOG_BASIC_PATH.parent / "README.md", "w", encoding="utf-8") as f:
-        f.write(
-            f"此文件夹用于存放日志文件, {LOG_BASIC_NAME} 为基本日志文件, {LOG_BASIC_NAME}.时间 为旧日志文件, 以此类推; 当日志文件大小超过1MB时, 会自动创建新的日志文件, 旧日志文件会被重命名为 {LOG_BASIC_NAME}.[当前时间].log\n\n"
-        )
+    # 如果logger已经配置过，直接返回
+    if logger.handlers:
+        return logger
 
-# 创建自定义的文件处理器并设置级别为DEBUG
-fh = TimedRotatingFileHandler(LOG_BASIC_PATH, maxBytes=1000000, backupCount=5)
-fh.setLevel(level)
-fh.setFormatter(CustomFormatter())
-logger.addHandler(fh)
+    level = logging.DEBUG
+    logger.setLevel(level)
+    # 禁止日志向上传播到父logger，防止重复输出
+    logger.propagate = False
 
-# 创建控制台处理器并设置级别为DEBUG
-ch = logging.StreamHandler()
-ch.setLevel(level)
-ch.setFormatter(CustomFormatter())
-logger.addHandler(ch)
+    # 清除之前可能添加的handlers
+    logger.handlers = []
+
+    # 设置日志文件路径
+    LOG_BASIC_NAME = "basic.log"
+    LOG_BASIC_DIR = current_dir / "logs"
+    LOG_BASIC_PATH = LOG_BASIC_DIR / LOG_BASIC_NAME
+    # 如果不存在logs文件夹则创建
+    if not os.path.exists(LOG_BASIC_DIR):
+        os.mkdir(LOG_BASIC_PATH.parent)
+    # 如果没有 README.md 文件, 则新建该文件用于说明日志文件的格式
+    if not os.path.exists(LOG_BASIC_DIR / "README.md"):
+        with open(LOG_BASIC_DIR / "README.md", "w") as f:
+            f.write(
+                f"此文件夹用于存放日志文件, {LOG_BASIC_NAME} 为基本日志文件, {LOG_BASIC_NAME}.时间 为旧日志文件, 以此类推; 当日志文件大小超过1MB时, 会自动创建新的日志文件, 旧日志文件会被重命名为 {LOG_BASIC_NAME}.[当前时间].log\n\n"
+            )
+
+    # 创建自定义的文件处理器并设置级别为DEBUG
+    fh = TimedRotatingFileHandler(LOG_BASIC_PATH, maxBytes=1000000, backupCount=5)
+    fh.setLevel(level)
+    fh.setFormatter(CustomFormatter())
+    logger.addHandler(fh)
+
+    # 创建控制台处理器并设置级别为DEBUG
+    ch = logging.StreamHandler()
+    ch.setLevel(level)
+    ch.setFormatter(CustomFormatter())
+    logger.addHandler(ch)
+
+    return logger
