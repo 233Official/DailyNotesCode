@@ -11,6 +11,7 @@ from summer_modules.vulnerability.cve.info import (
 )
 from summer_modules.vulnerability.cve.poc import test_get_poc
 from summer_modules.vulnerability.github_repo.nuclei import test_get_nuclei_cve_dict
+from summer_modules.vulnerability.attck.attck_analyze import test_analyze_attck_info
 
 CURRENT_DIR = Path(__file__).resolve().parent
 logger = init_and_get_logger(CURRENT_DIR, "test_logger")
@@ -54,7 +55,10 @@ def main():
     # test_get_poc()
 
     # Nuclei
-    test_get_nuclei_cve_dict()
+    # test_get_nuclei_cve_dict()
+
+    # ATT&CK
+    test_analyze_attck_info()
 
 if __name__ == "__main__":
     main()
