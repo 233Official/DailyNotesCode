@@ -3,9 +3,18 @@ from summer_modules.utils import write_dict_to_json_file
 from pathlib import Path
 from summer_modules.ai.deepseek import translate_text
 from summer_modules.logger import init_and_get_logger
+from summer_modules.vulnerability.cve.info import (
+    get_cve_description,
+    get_cve_info,
+    test_get_cve_info_from_cve,
+    test_get_cve_description
+)
+from summer_modules.vulnerability.cve.poc import test_get_poc
+from summer_modules.vulnerability.github_repo.nuclei import test_get_nuclei_cve_dict
 
 CURRENT_DIR = Path(__file__).resolve().parent
 logger = init_and_get_logger(CURRENT_DIR, "test_logger")
+
 
 def test_logger():
     logger.debug("debug")
@@ -13,6 +22,7 @@ def test_logger():
     logger.warning("warning")
     logger.error("error")
     logger.critical("critical")
+
 
 def test_write_dict_to_json_file():
     data = {"a": 1, "b": 2}
@@ -27,14 +37,24 @@ def test_write_dict_to_json_file():
     #     assert json.load(f) == data
     # oneline_filepath.unlink()
 
+
 def test_translate_text():
     english_text = "Hello, how are you? I am learning Python programming."
     translate_text(english_text)
 
+
 def main():
     # test_logger()
     # test_write_dict_to_json_file()
-    test_translate_text()
+    # test_translate_text()
+
+    # CVE
+    # test_get_cve_info_from_cve()
+    # test_get_cve_description()
+    # test_get_poc()
+
+    # Nuclei
+    test_get_nuclei_cve_dict()
 
 if __name__ == "__main__":
     main()
