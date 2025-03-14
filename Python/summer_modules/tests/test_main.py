@@ -32,9 +32,9 @@ def test_translate_text():
     translate_text(english_text)
 
 def main():
-    test_logger()
+    # test_logger()
     # test_write_dict_to_json_file()
-    # test_translate_text()
+    test_translate_text()
 
 if __name__ == "__main__":
     main()
