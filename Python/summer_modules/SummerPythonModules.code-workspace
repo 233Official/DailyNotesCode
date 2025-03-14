@@ -1,13 +1,16 @@
 {
 	"folders": [
 		{
+			"name": "Python",
 			"path": ".."
 		},
 		{
-			"path": "../../../../Official/NDR/networkcve/scripts"
+			"name": "summer_modules",
+			"path": "."
 		},
 		{
-			"path": "."
+			"name": "scripts",
+			"path": "../../../../Official/NDR/networkcve/scripts"
 		}
 	]
 }
