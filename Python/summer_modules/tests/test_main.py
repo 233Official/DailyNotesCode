@@ -55,10 +55,10 @@ def main():
     # test_get_poc()
 
     # Nuclei
-    # test_get_nuclei_cve_dict()
+    test_get_nuclei_cve_dict()
 
     # ATT&CK
-    test_analyze_attck_info()
+    # test_analyze_attck_info()
 
 if __name__ == "__main__":
     main()
