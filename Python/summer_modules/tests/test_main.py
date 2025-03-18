@@ -7,11 +7,21 @@ from summer_modules.vulnerability.cve.info import (
     get_cve_description,
     get_cve_info,
     test_get_cve_info_from_cve,
-    test_get_cve_description
+    test_get_cve_description,
 )
 from summer_modules.vulnerability.cve.poc import test_get_poc
 from summer_modules.vulnerability.github_repo.nuclei import test_get_nuclei_cve_dict
 from summer_modules.vulnerability.attck.attck_analyze import test_analyze_attck_info
+
+# CNNVD
+from summer_modules.vulnerability.cnnvd.info import (
+    test_search_vul_on_cnnvd_by_cve_id_online,
+    test_search_vul_on_cnnvd_by_cve_id_local,
+    test_search_vul_on_cnnvd_by_cve_id,
+    test_get_vul_info_from_cnnvd_by_cve_id_online,
+    test_get_vul_info_from_cnnvd_by_cve_id_local,
+    test_get_vul_info_from_cnnvd_by_cve_id
+)
 
 CURRENT_DIR = Path(__file__).resolve().parent
 logger = init_and_get_logger(CURRENT_DIR, "test_logger")
@@ -55,10 +65,19 @@ def main():
     # test_get_poc()
 
     # Nuclei
-    test_get_nuclei_cve_dict()
+    # test_get_nuclei_cve_dict()
 
     # ATT&CK
     # test_analyze_attck_info()
+
+    # CNNVD
+    # test_search_vul_on_cnnvd_by_cve_id_online()
+    test_search_vul_on_cnnvd_by_cve_id_local()
+    test_search_vul_on_cnnvd_by_cve_id()
+    # test_get_vul_info_from_cnnvd_by_cve_id_online()
+    test_get_vul_info_from_cnnvd_by_cve_id_local()
+    test_get_vul_info_from_cnnvd_by_cve_id()
+
 
 if __name__ == "__main__":
     main()
