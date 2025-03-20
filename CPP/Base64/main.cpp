@@ -8,7 +8,6 @@ using namespace std;
 
 static const char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-
 // base64编码函数, 将 unsigned char buf[] 编码为 base64 字符串
 std::string base64_encode(unsigned char buf[], unsigned int bufLen)
 {
@@ -37,56 +36,61 @@ std::string base64_encode(unsigned char buf[], unsigned int bufLen)
 }
 
 // Base64解码函数, 将 base64 字符串解码为 unsigned char buf[]
-std::vector<unsigned char> base64_decode(const std::string& encoded_string)
+std::vector<unsigned char> base64_decode(const std::string &encoded_string)
 {
     // Create lookup table for base64 decoding
     static unsigned char lookup[256];
     static bool initialized = false;
-    
-    if (!initialized) {
+
+    if (!initialized)
+    {
         // Initialize all to invalid
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < 256; i++)
+        {
             lookup[i] = 0xFF;
         }
-        
+
         // Set values for base64 characters
-        for (int i = 0; i < 64; i++) {
+        for (int i = 0; i < 64; i++)
+        {
             lookup[(unsigned char)base64_table[i]] = i;
         }
         initialized = true;
     }
-    
+
     std::vector<unsigned char> out;
     out.reserve(encoded_string.length() * 3 / 4);
-    
+
     int val = 0;
     int valb = -8;
-    
-    for (char c : encoded_string) {
-        if (c == '=') {
+
+    for (char c : encoded_string)
+    {
+        if (c == '=')
+        {
             // Padding character, skip
             continue;
         }
-        
+
         unsigned char x = lookup[(unsigned char)c];
-        if (x == 0xFF) {
+        if (x == 0xFF)
+        {
             // Invalid character, skip
             continue;
         }
-        
+
         val = (val << 6) | x;
         valb += 6;
-        
-        if (valb >= 0) {
+
+        if (valb >= 0)
+        {
             out.push_back((val >> valb) & 0xFF);
             valb -= 8;
         }
     }
-    
+
     return out;
 }
-
-
 
 int main()
 {
@@ -101,17 +105,20 @@ int main()
     // 测试解码
     vector<unsigned char> decoded = base64_decode(b64_encoded);
     cout << "解码后的数据: ";
-    for (unsigned char c : decoded) {
+    for (unsigned char c : decoded)
+    {
         cout << c;
     }
     cout << endl;
     // 对比解码后的数据是否与原数据一致
-    if (decoded.size() != sizeof(buf) || memcmp(&decoded[0], buf, sizeof(buf)) != 0) {
+    if (decoded.size() != sizeof(buf) || memcmp(&decoded[0], buf, sizeof(buf)) != 0)
+    {
         cout << "解码后的数据与原数据不一致" << endl;
-    } else {
+    }
+    else
+    {
         cout << "解码后的数据与原数据一致" << endl;
     }
-   
 
     return 0;
 }
