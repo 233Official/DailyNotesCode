@@ -8,6 +8,8 @@
 # 归档压缩文件
 **/*.7z
 
+# log
+**/logs/**
 
 ## 本地历史
 **/history.sqlite
