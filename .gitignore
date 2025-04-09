@@ -146,3 +146,6 @@ dmypy.json
 
 # Jetbrains
 .idea/
+
+# chat
+**/chat.md
