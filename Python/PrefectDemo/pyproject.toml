@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "prefect-demo"
+version = "0.1.0"
+description = "Prefect Demo项目，展示Flow、Task、Work Queue和Deployment的使用"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.14"
+prefect = "^3.3.6"
+pandas = "^2.2.3"
+numpy = "^2.2.5"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
