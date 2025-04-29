@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from flows.basic_flow import basic_data_flow
 from flows.advanced_flow import advanced_data_flow
-from deployments.deploy_flow import create_deployments
+from deployments.flow_deploy import create_deployments
 
 
 def run_basic_flow(args):

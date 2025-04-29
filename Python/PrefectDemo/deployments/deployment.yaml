@@ -1,0 +1,26 @@
+name: prefect-demo
+
+deployments:
+- name: 基础流程-每小时
+  entrypoint: flows/basic_flow.py:basic_data_flow
+  schedule:
+    interval: 3600
+  parameters:
+    rows: 200
+    output_path: scheduled_basic_output.csv
+  work_queue_name: demo-queue-yaml
+  tags:
+  - demo
+  - basic
+
+- name: 高级流程-每日
+  entrypoint: flows/advanced_flow.py:advanced_data_flow
+  schedule:
+    cron: "0 3 * * *"
+  parameters:
+    rows: 1000
+    partitions: 5
+  work_queue_name: demo-queue-yaml
+  tags:
+  - demo
+  - advanced
