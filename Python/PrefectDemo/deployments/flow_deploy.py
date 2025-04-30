@@ -1,6 +1,14 @@
 from flows.basic_flow import basic_data_flow
 from flows.advanced_flow import advanced_data_flow
 from pathlib import Path
+from datetime import datetime, timedelta
+from prefect.schedules import Interval
+from datetime import datetime, timedelta, timezone
+
+# 创建一个起止时间的调度
+start_time = datetime.now()
+end_time = start_time + timedelta(minutes=10)  # 只运行10分钟
+
 
 CURRENT_DIR = Path(__file__).parent.resolve()
 CURRENT_FILEPATH = Path(__file__).resolve()
@@ -19,7 +27,6 @@ def create_deployments():
         work_pool_name="demo-queue-flow-deploy",
         parameters={"rows": 200, "output_path": "scheduled_basic_output.csv"},
         tags=["demo", "basic"],
-        
     )
 
     # 2. 创建高级流程的部署 - 使用Cron调度（每天凌晨3点运行）
@@ -53,14 +60,25 @@ def create_deployments():
 
 
 if __name__ == "__main__":
+    # 设置只运行10分钟后结束
+    end_time = datetime.now(timezone.utc) + timedelta(minutes=10)
+
+    # 使用Interval创建每分钟运行一次的调度
+    schedule = Interval(
+        60,  # 每60秒运行一次
+        active=True,
+        # 设置结束时间作为参数
+        parameters={"end_time": end_time.isoformat()},
+    )
     # create_deployments()
     deployment_id = basic_data_flow.deploy(
         name="deployment-docker-flow-deploy",
         work_pool_name="my-work-pool-docker-flow-deploy",
-        interval=60,
+        schedule=schedule,
+        concurrency_limit=2,
         parameters={"rows": 500, "output_path": "output.csv"},
         tags=["production"],
-        image="localhost/prefect-flow-deploy-docker:latest",
-        push=False,
+        image="127.0.0.1:5000/prefect-flow-deploy-docker:latest",
+        push=True,
     )
     print(f"部署已创建: {deployment_id}")
