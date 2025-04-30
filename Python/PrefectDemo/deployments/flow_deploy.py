@@ -60,6 +60,7 @@ if __name__ == "__main__":
         interval=60,
         parameters={"rows": 500, "output_path": "output.csv"},
         tags=["production"],
-        image="prefect-flow-deploy-docker:latest",
+        image="localhost/prefect-flow-deploy-docker:latest",
+        push=False,
     )
     print(f"部署已创建: {deployment_id}")
