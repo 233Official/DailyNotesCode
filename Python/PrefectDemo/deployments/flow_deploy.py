@@ -4,6 +4,11 @@ from pathlib import Path
 from datetime import datetime, timedelta
 from prefect.schedules import Interval
 from datetime import datetime, timedelta, timezone
+from prefect.docker.docker_image import DockerImage
+from prefect.client.schemas.objects import (
+    ConcurrencyLimitConfig,
+    ConcurrencyLimitStrategy,
+)
 
 # 创建一个起止时间的调度
 start_time = datetime.now()
@@ -61,24 +66,37 @@ def create_deployments():
 
 if __name__ == "__main__":
     # 设置只运行10分钟后结束
-    end_time = datetime.now(timezone.utc) + timedelta(minutes=10)
+    # end_time = datetime.now(timezone.utc) + timedelta(minutes=3)
 
     # 使用Interval创建每分钟运行一次的调度
     schedule = Interval(
         60,  # 每60秒运行一次
         active=True,
         # 设置结束时间作为参数
-        parameters={"end_time": end_time.isoformat()},
+        # parameters={"end_time": end_time.isoformat()},
     )
+
+    # 创建 DockerImage 对象
+    docker_img = DockerImage(
+        name="127.0.0.1:5000/prefect-flow-deploy-docker:v0.1.5",
+        dockerfile="docker/Dockerfile",  # 相对路径到你的 Dockerfile
+        context=".",  # 构建上下文（通常是项目根目录）
+    )
+
+    # concurrency_limit = ConcurrencyLimitConfig(
+    #     limit=3, collision_strategy=ConcurrencyLimitStrategy.CANCEL_NEW
+    # )
+
     # create_deployments()
     deployment_id = basic_data_flow.deploy(
         name="deployment-docker-flow-deploy",
-        work_pool_name="my-work-pool-docker-flow-deploy",
+        work_pool_name="my-work-pool-docker-flow-deploy-2",
         schedule=schedule,
-        concurrency_limit=2,
+        # concurrency_limit=concurrency_limit,
         parameters={"rows": 500, "output_path": "output.csv"},
         tags=["production"],
-        image="127.0.0.1:5000/prefect-flow-deploy-docker:latest",
+        image=docker_img,
+        build=True,
         push=True,
     )
     print(f"部署已创建: {deployment_id}")

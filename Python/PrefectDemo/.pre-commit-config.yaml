@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: update-requirements
+        name: Update requirements.txt
+        entry: bash -c 'poetry export -f requirements.txt --output requirements.txt --without-hashes && git add requirements.txt'--without-hashes'
+        language: system
+        files: ^(pyproject.toml|poetry.lock)$
+        pass_filenames: false
