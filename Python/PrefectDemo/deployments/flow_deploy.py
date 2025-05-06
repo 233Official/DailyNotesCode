@@ -2,7 +2,7 @@ from flows.basic_flow import basic_data_flow
 from flows.advanced_flow import advanced_data_flow
 from pathlib import Path
 from datetime import datetime, timedelta
-from prefect.schedules import Interval
+from prefect.schedules import Interval, Cron
 from datetime import datetime, timedelta, timezone
 from prefect.docker.docker_image import DockerImage
 from prefect.client.schemas.objects import (
@@ -69,11 +69,18 @@ if __name__ == "__main__":
     # end_time = datetime.now(timezone.utc) + timedelta(minutes=3)
 
     # 使用Interval创建每分钟运行一次的调度
-    schedule = Interval(
-        60,  # 每60秒运行一次
+    # schedule = Interval(
+    #     60,  # 每60秒运行一次
+    #     active=True,
+    #     # 设置结束时间作为参数
+    #     # parameters={"end_time": end_time.isoformat()},
+    # )
+
+    # 使用Cron创建定时调度
+    schedule = Cron(
+        "15 16 * * *",  
         active=True,
-        # 设置结束时间作为参数
-        # parameters={"end_time": end_time.isoformat()},
+        timezone="Asia/Shanghai",
     )
 
     # 创建 DockerImage 对象
@@ -90,7 +97,7 @@ if __name__ == "__main__":
     # create_deployments()
     deployment_id = basic_data_flow.deploy(
         name="deployment-docker-flow-deploy",
-        work_pool_name="my-work-pool-docker-flow-deploy-2",
+        work_pool_name="my-work-pool-docker-flow-deploy",
         schedule=schedule,
         # concurrency_limit=concurrency_limit,
         parameters={"rows": 500, "output_path": "output.csv"},
