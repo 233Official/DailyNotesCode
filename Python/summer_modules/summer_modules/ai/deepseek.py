@@ -4,7 +4,7 @@ from pathlib import Path
 from summer_modules.logger import init_and_get_logger
 
 CURRENT_DIR = Path(__file__).resolve().parent
-CONFIG_TOML_FILEPATH = CURRENT_DIR / "../../config.toml"
+CONFIG_TOML_FILEPATH = (CURRENT_DIR / "../../config.toml").resolve()
 CONFIG = toml.load(CONFIG_TOML_FILEPATH)
 DEEPSEEK_APIKEY = CONFIG["deepseek_apikey"]
 logger = init_and_get_logger(CURRENT_DIR)
