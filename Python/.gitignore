@@ -2,3 +2,6 @@ __pypackages__/
 .pdm.toml
 
 py310
+
+# 配置文件
+config.toml

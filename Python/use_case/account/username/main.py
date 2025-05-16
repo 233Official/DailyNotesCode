@@ -1,12 +1,18 @@
 # 随机用户名生成器
 import random
 from typing import Optional, List
-from summer_modules.ai.deepseek import client
-from summer_modules.logger import init_and_get_logger
 from pathlib import Path
+import toml
+
+from summer_modules.ai.deepseek import DeepseekClient
+from summer_modules.logger import init_and_get_logger
 
 CURRENT_DIR = Path(__file__).resolve().parent
 logger = init_and_get_logger(CURRENT_DIR, "generate_username")
+CONFIG_TOML_FILEPATH = (CURRENT_DIR / "../../../config.toml").resolve()
+CONFIG = toml.load(CONFIG_TOML_FILEPATH)
+DEEPSEEK_APIKEY = CONFIG["deepseek_apikey"]
+DEEPSEEK_CLIENT = DeepseekClient(api_key=DEEPSEEK_APIKEY)
 
 
 def generate_username(style="default"):
@@ -172,7 +178,7 @@ def generate_username_with_deepseek(
 """
 
     try:
-        response = client.chat.completions.create(
+        response = DEEPSEEK_CLIENT.client.chat.completions.create(
             model="deepseek-chat",
             messages=[
                 {"role": "system", "content": system_prompt},
@@ -185,8 +191,12 @@ def generate_username_with_deepseek(
         )
         content = response.choices[0].message.content
         # 将返回的用户名列表拆分成单个用户名
-        usernames = content.split("\n")
-        return usernames
+        if content:
+            usernames = content.split("\n")
+            return usernames
+        else:
+            logger.error("DeepSeek API 返回的用户名为空")
+            return []
 
     except Exception as e:
         logger.error(f"DeepSeek API 生成用户名时发生未预期出错: {str(e)}")
