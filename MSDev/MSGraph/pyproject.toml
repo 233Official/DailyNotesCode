@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "msgraph"
+version = "0.1.0"
+description = ""
+authors = ["233Mac <ayusummer233@vip.qq.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.13"
+httpx = "^0.28.1"
+toml = "^0.10.2"
+msgraph-sdk = "^1.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
