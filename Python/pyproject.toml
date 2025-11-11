@@ -1,18 +1,15 @@
-[tool.poetry]
+[project]
 name = "summerpython"
 version = "0.1.0"
-description = ""
-authors = ["233Mac <ayusummer233@vip.qq.com>"]
+description = "Add your description here"
 readme = "README.md"
-package-mode = false
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.28.1",
+    "openpyxl>=3.1.5",
+    "pillow>=12.0.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-openpyxl = "^3.1.5"
-httpx = "^0.28.1"
-summer_modules = {path = "./summer_modules", develop = true}
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv.sources]
+# 将本地 summer_modules 作为可编辑依赖（开发模式）
+"summer-modules" = { path = "./summer_modules", editable = true }
