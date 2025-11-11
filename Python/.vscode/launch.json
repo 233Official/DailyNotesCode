@@ -23,6 +23,20 @@
       "env": {
         "PYTHONPATH": "${workspaceFolder}"
       }
+    },
+    {
+      "name": "SummerPython-图片转ICO",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/use_case/picture/to_ico/all_in_one.py",
+      "console": "integratedTerminal",
+      "args": [
+        "${workspaceFolder}/use_case/picture/to_ico/input/logo_transparent.png",
+        "${workspaceFolder}/use_case/picture/to_ico/out/logo_transparent.ico"
+      ],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
     }
   ]
 }
