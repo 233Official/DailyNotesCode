@@ -1,14 +1,20 @@
 {
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python", // Python默认解释器路径
+  "python.analysis.typeCheckingMode": "basic", // 类型检查模式设置为基本
+  "python.analysis.indexing": true, // 启用索引以提高代码分析性能
+  // 额外的Python路径
   "python.analysis.extraPaths": [
-    "${workspaceFolder}\\__pypackages__\\3.10\\lib",
-    "${workspaceFolder}/summer_modules"
+    "${workspaceFolder}/summer_modules",
+    "summer_modules/packages/summer_modules_ai/src",
+    "summer_modules/packages/summer_modules_core/src"
   ],
+  // 额外的自动完成路径
   "python.autoComplete.extraPaths": [
-    "${workspaceFolder}\\__pypackages__\\3.10\\lib",
-    "${workspaceFolder}/summer_modules"
+    "${workspaceFolder}/summer_modules",
+    "summer_modules/packages/summer_modules_ai/src",
+    "summer_modules/packages/summer_modules_core/src"
   ],
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
-  },
-  "python.formatting.provider": "none"
+    "editor.defaultFormatter": "ms-python.black-formatter" // 设置Python文件的默认格式化程序为Black
+  }
 }

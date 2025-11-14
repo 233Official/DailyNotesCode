@@ -8,8 +8,12 @@ dependencies = [
     "httpx>=0.28.1",
     "openpyxl>=3.1.5",
     "pillow>=12.0.0",
+    "toml>=0.10.2",
+    "summer-modules-core",
+    "summer-modules-ai",
 ]
 
 [tool.uv.sources]
-# 将本地 summer_modules 作为可编辑依赖（开发模式）
-"summer-modules" = { path = "./summer_modules", editable = true }
+# 直接引用本地 summer_modules workspace 中的子包
+summer-modules-core = { path = "summer_modules/packages/summer_modules_core", editable = true }
+summer-modules-ai = { path = "summer_modules/packages/summer_modules_ai", editable = true }

@@ -1,11 +1,11 @@
 # 随机用户名生成器
 import random
-from typing import Optional, List
+from typing import List
 from pathlib import Path
 import toml
 
-from summer_modules.ai.deepseek import DeepseekClient
-from summer_modules.logger import init_and_get_logger
+from summer_modules_ai.deepseek import DeepseekClient
+from summer_modules_core.logger import init_and_get_logger
 
 CURRENT_DIR = Path(__file__).resolve().parent
 logger = init_and_get_logger(CURRENT_DIR, "generate_username")
