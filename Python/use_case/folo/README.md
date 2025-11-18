@@ -17,8 +17,9 @@
 
 ![image-20251118133607702](http://cdn.ayusummer233.top/DailyNotes/202511181336916.png)
 
-运行 `folo_opml_resolver.py` 并传入必要参数:
+### Python 版本
 
+运行 `folo_opml_resolver.py` 并传入必要参数:
 - `--rsshub_url/-url`: 自部署 RSSHub 的基础地址，例如 `http://rsshub.self.top:8080`
 - `--access_key/-key`: RSSHub 部署时配置的 `ACCESS_KEY`
 - `--opml_filepath/-file`: 需要处理的 OPML 文件路径
@@ -34,6 +35,29 @@ python folo_opml_resolver.py \
   -out="D:/Downloads/follow_custom.opml"
 ```
 
-脚本会扫描 OPML 中所有 `xmlUrl` 属性，凡是以 `https://rsshub.app` 开头的链接都将替换成 `-url` 参数提供的地址，并在末尾追加 `?key=<ACCESS_KEY>`（若原本已有查询参数则改为 `&key=...`）。已存在的 `key` 参数会被新值覆盖，其余链接保持不变，转换结果默认写入新文件，避免覆盖原始导出。
+### Bash 版本 (macOS/Linux)
+
+- 依赖: Bash + Perl (两者在主流 Linux/macOS 系统中默认存在)。
+- 参数名称与 Python 版本完全一致:
+
+```bash
+bash folo_opml_resolver.sh \
+  -url=http://rsshub.self.top:8080 \
+  -key=dascwe \
+  -file="~/Downloads/follow.opml"
+```
+
+### PowerShell 版本 (Windows/PowerShell Core)
+
+- 依赖: Windows 自带 PowerShell 5+ 或 PowerShell Core (`pwsh`)。
+
+```powershell
+pwsh .\folo_opml_resolver.ps1 `
+  -url http://rsshub.self.top:8080 `
+  -key dascwe `
+  -file D:\Downloads\follow.opml
+```
+
+三套脚本逻辑一致: 扫描 OPML 中所有 `xmlUrl` 属性，只要以 `https://rsshub.app` 开头就替换为自部署地址并在末尾增加/覆盖 `key=<ACCESS_KEY>`。默认会在同目录生成 `*_resolved.opml` 副本，你也可以传入 `-out/--output_filepath` 自定义输出路径。
 
 ---
