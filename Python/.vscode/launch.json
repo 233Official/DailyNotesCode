@@ -37,6 +37,71 @@
       "env": {
         "PYTHONPATH": "${workspaceFolder}"
       }
+    },
+    {
+      "name": "时间戳 - 运行所有功能演示",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/use_case/time/timestamp.py",
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    },
+    {
+      "name": "时间戳 - 获取当前时间戳",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/use_case/time/timestamp.py",
+      "console": "integratedTerminal",
+      "args": ["--current"],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    },
+    {
+      "name": "时间戳 - 指定时间的时间戳",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/use_case/time/timestamp.py",
+      "console": "integratedTerminal",
+      "args": ["--datetime", "2026-01-08 12:30:45"],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    },
+    {
+      "name": "时间戳 - 指定日期零点时间戳",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/use_case/time/timestamp.py",
+      "console": "integratedTerminal",
+      "args": ["--date", "2026-01-08"],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    },
+    {
+      "name": "时间戳 - 今天零点时间戳",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/use_case/time/timestamp.py",
+      "console": "integratedTerminal",
+      "args": ["--today"],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    },
+    {
+      "name": "时间戳 - 明天零点时间戳",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/use_case/time/timestamp.py",
+      "console": "integratedTerminal",
+      "args": ["--tomorrow"],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
     }
   ]
 }
