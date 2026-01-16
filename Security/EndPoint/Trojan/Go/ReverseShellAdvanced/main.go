@@ -25,6 +25,9 @@ const (
 	MaxRetries = 10
 )
 
+// buildID 编译时注入的随机字符串，使每次编译的MD5不同
+var buildID string = "default"
+
 // 恶意字符串特征 - 静态分析会检测这些
 var maliciousStrings = []string{
 	"mimikatz",
