@@ -135,13 +135,16 @@ if __name__ == "__main__":
     if not any([args.current, args.datetime, args.date, args.today, args.tomorrow]):
         print("=== 时间戳工具演示 ===\n")
         print("--- 毫秒级时间戳 (13 位) ---")
-        print(f"1. 当前毫秒级时间戳: {get_current_timestamp('milliseconds')}")
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"1. 当前时间: {current_time}")
+        print(f"   毫秒级时间戳: {get_current_timestamp('milliseconds')}")
         print(f"2. 指定时间 (2026-01-08 12:30:45) 的毫秒级时间戳: {get_timestamp_from_datetime('2026-01-08 12:30:45', 'milliseconds')}")
         print(f"3. 指定日期 (2026-01-08) 零点的毫秒级时间戳: {get_timestamp_from_date('2026-01-08', 'milliseconds')}")
         print(f"4. 今天零点的毫秒级时间戳: {get_today_midnight_timestamp('milliseconds')}")
         print(f"5. 明天零点的毫秒级时间戳: {get_tomorrow_midnight_timestamp('milliseconds')}")
         print("\n--- 秒级时间戳 (10 位) ---")
-        print(f"6. 当前秒级时间戳: {get_current_timestamp('seconds')}")
+        print(f"6. 当前时间: {current_time}")
+        print(f"   秒级时间戳: {get_current_timestamp('seconds')}")
         print(f"7. 指定时间 (2026-01-08 12:30:45) 的秒级时间戳: {get_timestamp_from_datetime('2026-01-08 12:30:45', 'seconds')}")
         print(f"8. 指定日期 (2026-01-08) 零点的秒级时间戳: {get_timestamp_from_date('2026-01-08', 'seconds')}")
         print(f"9. 今天零点的秒级时间戳: {get_today_midnight_timestamp('seconds')}")
@@ -153,7 +156,9 @@ if __name__ == "__main__":
         print(f"12. 秒转毫秒 ({current_s}) -> {convert_timestamp(current_s, 'seconds', 'milliseconds')}")
     else:
         if args.current:
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             result = get_current_timestamp(args.unit)
+            print(f"当前时间: {current_time}")
             print(f"当前 {args.unit} 时间戳: {result}")
         if args.datetime:
             result = get_timestamp_from_datetime(args.datetime, args.unit)
