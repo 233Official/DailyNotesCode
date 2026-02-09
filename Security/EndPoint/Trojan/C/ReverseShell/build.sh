@@ -3,7 +3,7 @@
 # 交叉编译脚本 - 在 macOS/Linux 上编译 Windows 可执行文件
 # 需要安装 mingw-w64: brew install mingw-w64
 
-OUTPUT_NAME="reverse_shell"
+OUTPUT_NAME="reverse_shell_c"
 OUTPUT_DIR="./bin"
 
 # 生成随机字符串（每次编译不同，使MD5变化）
