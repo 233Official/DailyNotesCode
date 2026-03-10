@@ -168,6 +168,20 @@ GOOS=windows GOARCH=amd64 go build -ldflags="-s -w -H windowsgui" -o bin/reverse
 GOOS=windows GOARCH=386 go build -ldflags="-s -w -H windowsgui" -o bin/reverse_shell_win32.exe main.go
 ```
 
+### 指定目标大小构建
+
+如果你想测试上传接口对文件大小的限制，可以直接给 `build.sh` 传一个目标大小参数。脚本会先正常编译，再在 exe 末尾追加填充字节到指定大小。
+
+```bash
+# 生成大小约为 5 MB 的 32/64 位样本
+./build.sh 5MB
+
+# 也可以直接用字节数
+./build.sh 5242880
+```
+
+支持的单位包括 `B`、`K/KB`、`M/MB`、`G/GB`。目标大小必须大于等于编译后原始 exe 的实际大小。
+
 ### buildID 与哈希变化机制
 
 `build.sh` 会在每次构建时：
