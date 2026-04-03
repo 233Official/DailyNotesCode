@@ -5,6 +5,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "RSSHub - 生成访问URL",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/use_case/rsshub/generate_access_code.py",
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    },
+    {
       "name": "随机用户名生成",
       "type": "debugpy",
       "request": "launch",

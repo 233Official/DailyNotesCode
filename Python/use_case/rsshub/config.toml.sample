@@ -1,0 +1,2 @@
+ACCESS_KEY = "your_access_key"
+RSSHUB_BASEURL = "your_rsshub_baseurl" # 如 http://localhost:1200
